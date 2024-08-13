@@ -7,27 +7,25 @@ on:
 
 jobs:
   build:
-    env:
-      version: v1.2
 
     runs-on: windows-latest
     steps:
     - name: 检出代码
       uses: actions/checkout@v4
-    - name: 设定 Python 版本
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'  # 请根据您的程序需求指定 Python 版本
-    - name: 安装依赖
-      run: pip install -r requirements.txt
-    - name: 构建程序
-      run: pyinstaller --noconfirm --onedir --windowed --icon "./ui.ico" --add-data "./config-example.json;." --add-data "./enabled_icon.png;." --add-data "./ui_icon.png;."  "./mqtt_pc_control.py"
-    - name: 程序打包
-      run: powershell Compress-Archive -Path dist\mqtt_pc_control -DestinationPath windows-${{ env.version }}.zip
-    - name: 发布 Releases
-      uses: softprops/action-gh-release@v2
-      with:
-        body_path: release_notes.md
-        files: windows-${{ env.version }}.zip
-        tag_name: ${{ env.version }}
-        token: ${{ secrets.release_token }}
+    # - name: 设定 Python 版本
+    #   uses: actions/setup-python@v4
+    #   with:
+    #     python-version: '3.x'  # 请根据您的程序需求指定 Python 版本
+    # - name: 安装依赖
+    #   run: pip install -r requirements.txt
+    # - name: 构建程序
+    #   run: pyinstaller --noconfirm --onedir --windowed --icon "./ui.ico" --add-data "./config-example.json;." --add-data "./enabled_icon.png;." --add-data "./ui_icon.png;."  "./mqtt_pc_control.py"
+    # - name: 程序打包
+    #   run: powershell Compress-Archive -Path dist\mqtt_pc_control -DestinationPath windows-${{ github.ref_name }}.zip
+    # - name: 发布 Releases
+    #   uses: softprops/action-gh-release@v2
+    #   with:
+    #     body_path: release_notes.md
+    #     files: windows-${{ github.ref_name }}.zip
+    #     tag_name: ${{ github.ref_name }}
+    #     token: ${{ secrets.release_token }}
