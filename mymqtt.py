@@ -120,17 +120,14 @@ def retry_on_start(max_retries, ip_start):
 
 
 def log_info(msg):
-    format_str = f"{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}\t{msg}"
+    format_str = f"【{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}】\t{msg}"
     with open(LOG_FILE, "a") as f:
         f.write(format_str + "\n")
 
 
 def wndproc(hwnd, msg, wparam, lparam):
     # 关机时捕获到消息后执行的程序：17 是响应 WM_QUERYENDSESSION；22 是响应 WM_ENDSESSION
-    log_info("关机时捕获到消息后执行的程序")
-    log_info("消息类型：" + str(msg))
-    log_info("wparam：" + str(wparam))
-    log_info("lparam：" + str(lparam))
+    log_info(f"关机时捕获到消息。消息类型：{str(msg)}，wparam：{str(wparam)}，lparam：{str(lparam)}")
     send_status(CLIENT, "off")
     time.sleep(10)  # 延迟一段时间以完成操作
     return True
