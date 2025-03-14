@@ -11,6 +11,11 @@ DIR = os.path.dirname(os.path.realpath(__file__))
 TRAY_ICON = os.path.join(DIR, "ui_icon.png")
 ENABLED_ICON = os.path.join(DIR, "enabled_icon.png")
 LOG_FILE = os.path.join(DIR, "log.txt")
+def read_version():
+    with open(os.path.join(DIR, "version.txt"), "r") as f:
+        return f.read().strip()
+
+VERSION = read_version()
 
 
 class MyApplication(QApplication):
@@ -74,7 +79,7 @@ class MyApplication(QApplication):
     def about(self):
         dummy_widget = QWidget()  # 创建一个空的QWidget对象
         QMessageBox.about(
-            dummy_widget, "关于", "作者：lixaster\n版本：1.0.0\n日期：2024-04-01"
+            dummy_widget, "关于", f"作者：lixaster\n版本：{VERSION}"
         )
 
     def exit_app(self):

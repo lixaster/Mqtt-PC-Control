@@ -179,7 +179,6 @@ def catch_shutdown_signal():
 
 def runmqtt():
     init_mqtt_config()
-    catch_shutdown_signal()
 
     ip_start = "192.168.1"
 
@@ -187,5 +186,7 @@ def runmqtt():
     try:
         if retry_on_start(max_retries, ip_start):
             CLIENT = mqtt_client()
+            print("MQTT连接成功")
+            catch_shutdown_signal()
     except Exception as e:
         log_info("网络连接失败，请检查网络设置和ip_start参数：{e}")
