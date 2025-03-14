@@ -11,14 +11,14 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
     - name: 读取版本号
       id: get_version
       run: |
         # 读取VERSION文件内容并去除换行符
         $version = (Get-Content -Path .\VERSION -Raw).Trim()
         echo "version=$version" >> $env:GITHUB_ENV
-    - name: 检出代码
-      uses: actions/checkout@v4
     - name: 设定 Python 版本
       uses: actions/setup-python@v4
       with:
