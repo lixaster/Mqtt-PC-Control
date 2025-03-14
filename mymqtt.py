@@ -127,7 +127,9 @@ def log_info(msg):
 
 def wndproc(hwnd, msg, wparam, lparam):
     # 关机时捕获到消息后执行的程序：17 是响应 WM_QUERYENDSESSION；22 是响应 WM_ENDSESSION
-    log_info(f"关机时捕获到消息。消息类型：{str(msg)}，wparam：{str(wparam)}，lparam：{str(lparam)}")
+    log_info(
+        f"关机时捕获到消息。消息类型：{str(msg)}，wparam：{str(wparam)}，lparam：{str(lparam)}"
+    )
     send_status(CLIENT, "off")
     time.sleep(10)  # 延迟一段时间以完成操作
     return True
@@ -177,12 +179,13 @@ def catch_shutdown_signal():
 
 def runmqtt():
     init_mqtt_config()
+    catch_shutdown_signal()
 
     ip_start = "192.168.1"
 
     max_retries = 4
-    if retry_on_start(max_retries, ip_start):
-        CLIENT = mqtt_client()
-        catch_shutdown_signal()
-    else:
-        log_info("网络连接失败，请检查网络设置和ip_start参数")
+    try:
+        if retry_on_start(max_retries, ip_start):
+            CLIENT = mqtt_client()
+    except Exception as e:
+        log_info("网络连接失败，请检查网络设置和ip_start参数：{e}")
