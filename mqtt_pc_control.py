@@ -11,11 +11,8 @@ DIR = os.path.dirname(os.path.realpath(__file__))
 TRAY_ICON = os.path.join(DIR, "ui_icon.png")
 ENABLED_ICON = os.path.join(DIR, "enabled_icon.png")
 LOG_FILE = os.path.join(DIR, "log.txt")
-def read_version():
-    with open(os.path.join(DIR, "VERSION"), "r") as f:
-        return f.read().strip()
 
-VERSION = read_version()
+VERSION = "2025.03.14"
 
 
 class MyApplication(QApplication):
